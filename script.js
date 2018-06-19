@@ -1,36 +1,41 @@
-var turn = "O";
 
-  
+var turn = "O";
+var pop= document.getElementById("popup");
+var overlay= document.getElementById("overlay");
+ 
+
+//whose turn?
+function clicked(button) {
+    if (turn=="X") {
+    turn="O";
+    setzen(button, turn);
+    }
+    else if (turn=="O") {
+    turn="X";
+    setzen(button, turn); 
+    }
+}
+
+
 //set Buttons 
 function remove() {
-
+    //Disabling the button once it is clicked
     for(var i=1;i<=9;i++){
         document.getElementById(i).disabled = false;
         document.getElementById(i).value = '';
     }
     
-    document.getElementById("popup").style.visibility = "hidden";
-    document.getElementById("overlay").style.visibility = "hidden";
+    pop.style.visibility = "hidden";
+    overlay.style.visibility = "hidden";
 }
 
-function btndeactivate() {
-    for(var i=1;i<=9;i++){
-        document.getElementById(i).disabled = true;
-    }
-   
-}
 
 function popup(gewinner) {
-      
-      btndeactivate();
-    
-      
+    //Give popup
       popuptext = document.getElementById("text");
       popuptext.innerHTML = gewinner + " wins the match";
     
       //macht Popup 
-      var pop = document.getElementById("popup");
-      var overlay = document.getElementById("overlay");
       pop.style.visibility = "visible";
       overlay.style.visibility ="visible"
 }
@@ -38,7 +43,20 @@ function popup(gewinner) {
 
 
 function checking() {
-    
+   //Draw condition
+    var temp,draw=false;
+    for(var i=1;i<=9;i++){
+        temp=document.getElementById(i).value;
+        if(temp!="X" && temp!="O"){
+            draw=true;
+        }
+    }
+    if(draw==false){
+        draw='nobody';
+            popup(draw);
+        }
+   
+    //Storing vaues of button in variables
     var b1 = document.getElementById("1").value;
     var b2 = document.getElementById("2").value;
     var b3 = document.getElementById("3").value;
@@ -85,17 +103,7 @@ function checking() {
     else if (((b7=="X") || (b7=="O")) && ((b7 == b5) && (b5 == b3))){
       popup(b7);
     }
-    var temp,draw=false;
-    for(var i=1;i<=9;i++){
-        temp=document.getElementById(i).value;
-        if(temp!="X" && temp!="O"){
-            draw=true;
-        }
-    }
-    if(draw==false){
-        console.log("draw");
-        draw='nobody';
-            popup(draw);}
+    
     
     }
 
@@ -149,15 +157,4 @@ function setzen(x, turn) {
      }
      checking();
      }
-  
-//whose turn?
-function clicked(button) {
-    if (turn=="X") {
-    turn="O";
-    setzen(button, turn);
-    }
-    else if (turn=="O") {
-    turn="X";
-    setzen(button, turn); 
-    }
-    }
+ 
